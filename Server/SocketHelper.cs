@@ -19,14 +19,7 @@ namespace Server
 
             return endPoint;
         }
-
-        //public static EndPoint SecondEndPoint()
-        //{
-        //    IPAddress adr = IPAddress.Any;
-        //    int port = 8080;
-        //    IPEndPoint endPoint = new IPEndPoint(adr, port);
-        //    return endPoint;
-        //}
+        
 
         // Skapa en ip4 TCP-Socket
         public static Socket MySocket()

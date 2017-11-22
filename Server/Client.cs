@@ -21,7 +21,9 @@ namespace Server
 
         public void Listen()
         {
-            string line = "";
+            string customerName  = "Default customer";
+            int dishId;
+
             while (true)
             {
                 byte[] bytes = new Byte[1024];
@@ -29,38 +31,31 @@ namespace Server
                 if (recBytes == 0) break; // Checks if client its closed.
                 // var nettoBytes = (bytes.Take(recBytes)).ToArray<byte>();
                 string response = Encoding.UTF8.GetString(bytes, 0, recBytes);
+                var tid = DateTime.Now.ToLongTimeString();
+                var array = Encoding.ASCII.GetBytes(tid);
+                _client.Send(array);
 
                 switch (response)
                 {
                     case "1":
-                        Console.WriteLine("Maträtt Pasta beställt.");
+                        dishId = 1;
+                        DisplayInfo(tid, customerName, dishId);
                         break;
                     case "2":
-                        Console.WriteLine("Maträtt 2 beställt.");
+                        dishId = 2;
+                        DisplayInfo(tid, customerName, dishId);
                         break;
-                }
 
-                //if (response.ToLower() == "x")
-                //{
-                //    Console.WriteLine("Client # closed.");
-                //    break;
-                //}
-                if (response == "\r\n")
-                {
-                    var tid = DateTime.Now.ToLongTimeString();
-                    var array = Encoding.ASCII.GetBytes(tid);
-                    _client.Send(array);
-
-                    Console.Write(tid + "- Maträtt: ");
-                    Console.WriteLine(line);
-                    line = "";
-                }
-                else
-                {
-                    line += response;
+                    default:
+                        break;
                 }
             }
             _client.Close();
+        }
+
+        private void DisplayInfo(string tid, string customerName, int dishId)
+        {
+            Console.Write(tid + " - " + customerName + " - Maträtt: " + dishId);
         }
     }
 }
