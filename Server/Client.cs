@@ -29,18 +29,29 @@ namespace Server
                 if (recBytes == 0) break; // Checks if client its closed.
                 // var nettoBytes = (bytes.Take(recBytes)).ToArray<byte>();
                 string response = Encoding.UTF8.GetString(bytes, 0, recBytes);
-                if (response.ToLower() == "x")
+
+                switch (response)
                 {
-                    Console.WriteLine("Client # closed.");
-                    break;
+                    case "1":
+                        Console.WriteLine("Maträtt Pasta beställt.");
+                        break;
+                    case "2":
+                        Console.WriteLine("Maträtt 2 beställt.");
+                        break;
                 }
+
+                //if (response.ToLower() == "x")
+                //{
+                //    Console.WriteLine("Client # closed.");
+                //    break;
+                //}
                 if (response == "\r\n")
                 {
                     var tid = DateTime.Now.ToLongTimeString();
                     var array = Encoding.ASCII.GetBytes(tid);
                     _client.Send(array);
 
-                    Console.Write(tid + " ");
+                    Console.Write(tid + "- Maträtt: ");
                     Console.WriteLine(line);
                     line = "";
                 }

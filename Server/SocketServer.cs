@@ -37,6 +37,11 @@ namespace Server
                 string welcome = "Welcome to Restaurang Nemo";
                 byte[] toBytes = Encoding.ASCII.GetBytes(welcome);
                 client.Send(toBytes);
+
+                string meny = Meny();
+                toBytes = Encoding.UTF8.GetBytes(meny);
+                client.Send(toBytes);
+
                 Console.ReadLine();
             }
         }
@@ -45,6 +50,17 @@ namespace Server
         {
             Console.WriteLine("Address: {0}", ((IPEndPoint)socket.LocalEndPoint).Address);
             Console.WriteLine("Port: {0}", ((IPEndPoint)socket.LocalEndPoint).Port);
+        }
+
+        private string Meny()
+        {
+            string menu = "\r\n" +
+                "Maträtter:" +
+                "\r\n 1: Pasta" +
+                "\r\n 2: Sallad" +
+                "\r\n 3: Pizza" +
+                "\r\n 4: Soppa \r\n";
+            return menu;
         }
     }
 }
